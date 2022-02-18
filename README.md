@@ -1,0 +1,3 @@
+# ssfunc
+
+Miscellaneous helper functions 
