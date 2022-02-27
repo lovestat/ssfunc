@@ -21,3 +21,9 @@ ar1_cor <- function(n, rho) {
                     (1:n - 1))
   rho^exponent
 }
+
+## Evaluate a expression text
+eval_text <- function(text) {
+  eval(parse(text = text), envir = .GlobalEnv)
+}
+
