@@ -1,7 +1,7 @@
 ## read all rds files in a folder and load them as objects with the file names
 readRDS_dir <- function(path) {
   filenames <- list.files(path = path, pattern = ".rds")
-  objnames <- filenames %>% substring(1, nchar(.)-4)
+  objnames <- substring(filenames, 1, nchar(.)-4)
   eval(parse(text = glue::glue("`{objnames}` <- readRDS('{path}{filenames}')")), envir = .GlobalEnv)
   return(objnames)
 }
