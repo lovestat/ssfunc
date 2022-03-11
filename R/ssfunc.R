@@ -6,12 +6,18 @@ readRDS_dir <- function(path) {
   return(objnames)
 }
 
-## Create recursive list
-rec_list <- function(len){
+## Create recursive list with desired a name list
+## len is a integer vector
+## nam is a list containing names
+rec_list <- function(len, nam = NULL){
   if(length(len) == 1){
-    vector("list", len)
+    out1 <- vector("list", len);
+    names(out1) <- nam[[1]]
+    out1
   } else {
-    lapply(1:len[1], function(...) rec_list(len[-1]))
+    out2 <- lapply(1:len[1], function(...) rec_list(len[-1], nam = nam[-1]))
+    names(out2) <- nam[[1]]
+    out2
   }
 }
 
