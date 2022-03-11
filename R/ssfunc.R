@@ -7,7 +7,7 @@ readRDS_dir <- function(path) {
 }
  
 ## Create recursive list with desired a name list
-## len is a integer vector
+## len is an integer vector
 ## nam is a list containing names
 rec_list <- function(len, nam = NULL){
   if(length(len) == 1){
