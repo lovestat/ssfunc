@@ -5,7 +5,7 @@ readRDS_dir <- function(path) {
   eval(parse(text = glue::glue("`{objnames}` <- readRDS('{path}{filenames}')")), envir = .GlobalEnv)
   return(objnames)
 }
-
+ 
 ## Create recursive list with desired a name list
 ## len is a integer vector
 ## nam is a list containing names
