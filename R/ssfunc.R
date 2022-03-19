@@ -5,7 +5,7 @@ readRDS_dir <- function(path) {
   eval(parse(text = glue::glue("`{objnames}` <- readRDS('{path}{filenames}')")), envir = .GlobalEnv)
   return(objnames)
 }
- 
+
 ## Create recursive list with desired a name list
 ## len is an integer vector
 ## nam is a list containing names
@@ -31,5 +31,28 @@ ar1_cor <- function(n, rho) {
 ## Evaluate a expression text
 eval_text <- function(text) {
   eval(parse(text = text), envir = .GlobalEnv)
+}
+
+## Replacement functional `subset()`
+`subset<-` <- function (x, subset, select, value, ...)
+{
+  # Use tibble's feature to store and visualize list as cell elements
+  x <- tibble::as_tibble(x)
+  r <- if (missing(subset))
+    rep_len(TRUE, nrow(x))
+  else {
+    e <- substitute(subset)
+    r <- eval(e, x, parent.frame())
+    if (!is.logical(r))
+      stop("'subset' must be logical")
+    r & !is.na(r)
+  }
+  vars <- if (missing(select))
+    stop("'select' must be provided")
+  else {
+    deparse(substitute(select))
+  }
+  x[r, vars] <- value
+  x
 }
 
