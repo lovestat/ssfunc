@@ -6,6 +6,14 @@ readRDS_dir <- function(path) {
   return(objnames)
 }
 
+## read rds files in vectorized style
+readRDS_vec <- function(objnames, filepaths, env = .GlobalEnv) {
+  stopifnot(length(objnames) == filepaths)
+  eval(parse(text = glue::glue("`{objnames}` <- readRDS('{filepaths}')")), envir = env)
+  return(objnames)
+}
+
+
 ## Create recursive list with desired a name list
 ## len is an integer vector
 ## nam is a list containing names
