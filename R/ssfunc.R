@@ -11,9 +11,15 @@ readRDS_dir <- function(path) {
 ### filepaths: a character vector, the rds file paths
 ### out:       'objnames' will output the objnames
 ###            'list' will store all the objects into a names list
-readRDS_vec <- function(objnames, filepaths, out = c("objnames", "list")) {
+### reload:    logical value, if reload the object
+readRDS_vec <- function(objnames, filepaths, out = c("objnames", "list"), reload = TRUE) {
   out <- match.arg(out)
   stopifnot(length(objnames) == length(filepaths))
+  if (!reload){
+    l <- objnames %in% ls(envir = .GlobalEnv)
+    objnames <- objnames[!l]
+    filepaths <- filepaths[!l]
+  }
   eval(parse(text = glue::glue("`{objnames}` <- readRDS('{filepaths}')")), envir = .GlobalEnv)
   if (out == "objnames") return(objnames)
   if (out == "list") return(mget(objnames, envir = .GlobalEnv))
