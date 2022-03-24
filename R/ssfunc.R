@@ -19,7 +19,17 @@ readRDS_vec <- function(objnames, filepaths, out = c("objnames", "list")) {
   if (out == "list") return(mget(objnames, envir = .GlobalEnv))
 }
 
-
+## Delete files with specific pattern in a directory
+delete_files <- function(path, pattern = ".Rout"){
+  filenames <- list.files(path = path, pattern = pattern)
+  filepaths <- glue::glue("{path}/{filenames}")
+  o <- map_lgl(filepaths, ~ if (file.exists(.x)) file.remove(.x) else FALSE)
+  list(deleted.files = filenames[o],
+       deleted.paths = filepaths[o],
+       undeleted.files = filenames[!o],
+       undeleted.paths = filepaths[!o])
+}
+               
 ## Create recursive list with desired a name list
 ## len is an integer vector
 ## nam is a list containing names
