@@ -8,7 +8,7 @@ readRDS_dir <- function(path) {
 
 ## read rds files in vectorized style
 readRDS_vec <- function(objnames, filepaths, env = .GlobalEnv) {
-  stopifnot(length(objnames) == filepaths)
+  stopifnot(length(objnames) == length(filepaths))
   eval(parse(text = glue::glue("`{objnames}` <- readRDS('{filepaths}')")), envir = env)
   return(objnames)
 }
