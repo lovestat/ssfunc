@@ -86,3 +86,11 @@ eval_text <- function(text) {
   x
 }
 
+## Transpose a data.frame
+t_df <- function(x) {
+  x %>%
+  rownames_to_column() %>% 
+  pivot_longer(!rowname, names_to = "col1", values_to = "col2") %>% 
+  pivot_wider(names_from = "rowname", values_from = "col2")
+}
+                   
