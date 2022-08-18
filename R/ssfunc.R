@@ -29,7 +29,7 @@ readRDS_vec <- function(objnames, filepaths, out = c("objnames", "list"), reload
 delete_files <- function(path, pattern = ".Rout"){
   filenames <- list.files(path = path, pattern = pattern)
   filepaths <- glue::glue("{path}/{filenames}")
-  o <- map_lgl(filepaths, ~ if (file.exists(.x)) file.remove(.x) else FALSE)
+  o <- purrr::map_lgl(filepaths, ~ if (file.exists(.x)) file.remove(.x) else FALSE)
   list(deleted.files = filenames[o],
        deleted.paths = filepaths[o],
        undeleted.files = filenames[!o],
